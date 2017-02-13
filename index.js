@@ -51,7 +51,7 @@ app.post('/api/products', (req, res) => {
 
   product.save((err, productStored) => {
     if (err) {
-      res.status(500).send({message: `Error trying to salve object in to data base: ${err}`})
+      res.status(500).send({message: `Error trying to salve object into database: ${err}`})
     }
     res.status(200).send({product: productStored})
   })
@@ -59,7 +59,20 @@ app.post('/api/products', (req, res) => {
 
 app.put('/api/products/:productId', (req, res) => {})
 
-app.delete('/api/products/:productId', (req, res) => {})
+app.delete('/api/products/:productId', (req, res) => {
+  let productId = req.params.productId
+  Product.findById(productId, (err, product) => {
+    if (err) {
+      return res.status(500).send({message: `Error trying to delete object in  database: ${err}`})
+    }
+    product.remove(err => {
+      if (err) {
+        return res.status(500).send({message: `Error trying to delete object in  database: ${err}`})
+      }
+      res.status(200).send({message: `Object deleted`})
+    })
+  })
+})
 
 mongoose.connect('mongodb://localhost:27017/shop', (err, res) => {
   if (err) {
