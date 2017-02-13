@@ -10,9 +10,10 @@
   "author": "Jesus Guerra",
   "license": "MIT",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "bluebird": "^3.4.7",
     "body-parser": "^1.16.1",
     "express": "^4.14.1",
-    "bluebird": "^3.4.7",
     "mongoose": "^4.8.2"
   },
   "devDependencies": {
