@@ -3,15 +3,10 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
-const productConstroller = require('./controllers/product')
+const api = require('./routes')
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
-
-app.get('/api/product', productConstroller.getProducts)
-app.get('/api/product/:productId', productConstroller.getProduct)
-app.post('/api/product', productConstroller.createProduct)
-app.put('/api/product/:productId', productConstroller.updateProduct)
-app.delete('/api/product/:productId', productConstroller.deleteProduct)
+app.use('/api', api)
 
 module.exports = app
