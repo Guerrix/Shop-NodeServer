@@ -1,5 +1,5 @@
 'use strict'
-const Product = require('./models/product')
+const Product = require('../models/product')
 
 function getProduct (req, res) {
   let productId = req.params.productId
@@ -71,7 +71,7 @@ function deleteProduct (req, res) {
   })
 }
 
-exports = {
+module.exports = {
   getProduct,
   getProducts,
   updateProduct,
