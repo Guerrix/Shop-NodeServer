@@ -36,6 +36,7 @@ function updateProduct (req, res) {
     res.status(200).send({product: productUpdate})
   })
 }
+
 function createProduct (req, res) {
   console.log('POST /api/product')
   console.log(req.body)
