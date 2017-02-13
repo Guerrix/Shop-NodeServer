@@ -57,7 +57,17 @@ app.post('/api/products', (req, res) => {
   })
 })
 
-app.put('/api/products/:productId', (req, res) => {})
+app.put('/api/products/:productId', (req, res) => {
+  let productId = req.params.productId
+  let update = req.body
+
+  Product.findByIdAndUpdate(productId, update, {new: true}, (err, productUpdate) => {
+    if (err) {
+      return res.status(500).send({message: `Error trying to update object in  database: ${err}`})
+    }
+    res.status(200).send({product: productUpdate})
+  })
+})
 
 app.delete('/api/products/:productId', (req, res) => {
   let productId = req.params.productId
