@@ -10,7 +10,8 @@ function signUp (req, res) {
 
   const user = new User({
     email: req.body.email,
-    displayName: req.body.displayName
+    displayName: req.body.displayName,
+    password: req.body.password
   })
 
   user.save((err) => {

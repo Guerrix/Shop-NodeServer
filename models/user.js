@@ -16,27 +16,22 @@ const UserSchema = Schema({
 
 UserSchema.pre('save', function (next) {
   let user = this
-  // if (!user.isModified('password')) {
-  //   return next()
-  // }
-  bcrypt.genSalt(10, (err, salt) => {
+  if (!user.isModified('password')) {
+    return next()
+  }
+  bcrypt.hash(user.password, null, null, function (err, hash) {
     if (err) {
       next()
     }
-    bcrypt.hash(user.password, salt, null, (err, hash) => {
-      if (err) {
-        next()
-      }
-      user.password = hash
-      next()
-    })
+    user.password = hash
+    next()
   })
 })
 
 UserSchema.methods.comparePassword = function (candidatePassword, cb) {
   bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
     if (err) {
-      return cb(err)
+      return cb(err, false)
     }
     cb(null, isMatch)
   })
