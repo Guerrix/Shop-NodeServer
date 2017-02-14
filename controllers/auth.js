@@ -2,7 +2,21 @@
 
 const User = require('../models/user')
 const service = require('../services')
+var graph = require('fbgraph')
 
+function signUpWithFacebook (req, res) {
+  // let facebookToken = req.params.facebookToken
+  let accessToken = 'EAACEdEose0cBAOjH5HsI34qQrVU4byLzZBj90oUGq5smcUrxrcRIfZBZADdNNtjzZAZBb4ylqrBrt9pPDTGjIJXZABSsk5SCPGnr9bkZB15R5WPJ0Jd1zY9rtRNudZAKEIGHuYankhEhSmcqbKqY5jGiSD7r7gZB7aCBCGgUumVnXmy8oSXdMJcy7BMCLZCjjUY5YZD'
+  graph.setAccessToken(accessToken)
+
+  graph.get('me?fields=id,first_name,last_name', function (err, res) {
+    if (err) {
+      console.log(err)
+    }
+    console.log(res)
+    console.log(res['first_name'] + ' - ' + res.first_name)
+  })
+}
 function signUp (req, res) {
   console.log('POST /api/signUp')
   console.log(req.body)
