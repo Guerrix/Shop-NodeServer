@@ -2,9 +2,12 @@
 
 const mongoose = require('mongoose')
 const User = require('../models/user')
-const service  = require('../services')
+const service = require('../services')
 
 function signUp (req, res) {
+  console.log('POST /api/signUp')
+  console.log(req.body)
+
   const user = new User({
     email: req.body.email,
     displayName: req.body.displayName
@@ -21,7 +24,6 @@ function signUp (req, res) {
 function signIn (req, res) {
 
 }
-
 
 module.exports = {
   signUp,
