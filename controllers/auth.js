@@ -27,7 +27,10 @@ function signIn (req, res) {
 
   User.findOne({ email: email }, function (err, user) {
     if (err) {
-      res.status(500).send({message: `Error fetching user info: ${err}`})
+      return res.status(500).send({message: `Error fetching user info: ${err}`})
+    }
+    if (!user) {
+      return res.status(404).send({message: `User not found`})
     }
 
     user.comparePassword(password, function (err, isMatch) {
