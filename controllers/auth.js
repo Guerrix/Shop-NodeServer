@@ -22,7 +22,25 @@ function signUp (req, res) {
 }
 
 function signIn (req, res) {
+  let email = req.body.email
+  let password = req.body.password
 
+  User.findOne({ email: email }, function (err, user) {
+    if (err) {
+      res.status(500).send({message: `Error fetching user info: ${err}`})
+    }
+
+    user.comparePassword(password, function (err, isMatch) {
+      if (err) {
+        return res.status(500).send({message: `Error fetching user info: ${err}`})
+      }
+      if (!isMatch) {
+        return res.status(500).send({message: `Email or password does not match`})
+      }
+      console.log(password, isMatch)
+      return res.status(200).send({token: service.createToken(user)})
+    })
+  })
 }
 
 module.exports = {

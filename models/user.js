@@ -9,17 +9,16 @@ const UserSchema = Schema({
   email: {type: String, unique: true, lowercase: true},
   displayName: String,
   avatar: String,
-  password: {type: String, select: false},
+  password: {type: String }, //select: false
   signupDate: {type: Date, default: Date.now()},
   lastLoging: Date
 })
 
 UserSchema.pre('save', function (next) {
   let user = this
-  if (!user.isModified('password')) {
-    return next()
-  }
-
+  // if (!user.isModified('password')) {
+  //   return next()
+  // }
   bcrypt.genSalt(10, (err, salt) => {
     if (err) {
       next()
@@ -33,6 +32,15 @@ UserSchema.pre('save', function (next) {
     })
   })
 })
+
+UserSchema.methods.comparePassword = function (candidatePassword, cb) {
+  bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
+    if (err) {
+      return cb(err)
+    }
+    cb(null, isMatch)
+  })
+}
 
 UserSchema.methods.gravatar = function () {
   if (!this.email) {
