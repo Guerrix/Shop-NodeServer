@@ -5,17 +5,19 @@ const service = require('../services')
 var graph = require('fbgraph')
 
 function signUpWithFacebook (req, res) {
-  // let facebookToken = req.params.facebookToken
-  let accessToken = 'EAACEdEose0cBAOjH5HsI34qQrVU4byLzZBj90oUGq5smcUrxrcRIfZBZADdNNtjzZAZBb4ylqrBrt9pPDTGjIJXZABSsk5SCPGnr9bkZB15R5WPJ0Jd1zY9rtRNudZAKEIGHuYankhEhSmcqbKqY5jGiSD7r7gZB7aCBCGgUumVnXmy8oSXdMJcy7BMCLZCjjUY5YZD'
+  let accessToken = req.params.facebookToken
+  console.log(accessToken)
   graph.setAccessToken(accessToken)
 
-  graph.get('me?fields=id,first_name,last_name,email', function (err, res) {
+  graph.get('me?fields=id,first_name,last_name,email', function (err, fRes) {
     if (err) {
       console.log(err.message)
       console.log(err)
+      res.status(500).send({message: `Error trying to get facebook info: ${err.message}`})
     } else {
-      console.log(res)
-      console.log(res['first_name'] + ' - ' + res.email)
+      res.send(fRes)
+      console.log(fRes)
+      console.log(fRes['first_name'] + ' - ' + res.email)
     }
   })
 }
@@ -63,5 +65,6 @@ function signIn (req, res) {
 
 module.exports = {
   signUp,
-  signIn
+  signIn,
+  signUpWithFacebook
 }
