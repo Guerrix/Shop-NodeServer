@@ -30,6 +30,7 @@ function signUp (req, res) {
     displayName: req.body.displayName,
     password: req.body.password
   })
+  user.avatar = user.gravatar()
 
   user.save((err) => {
     if (err) {
