@@ -1,5 +1,6 @@
 'use strict'
 
+require('dotenv').config({path: './dotenv.env'})
 const mongoose = require('mongoose')
 const app = require('./app')
 mongoose.Promise = require('bluebird')
