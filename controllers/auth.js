@@ -35,7 +35,7 @@ function signUp (req, res) {
     if (err) {
       res.status(500).send({message: `Error trying to create user: ${err}`})
     }
-    res.status(200).send({token: service.createToken(user)})
+    res.send({token: service.createToken(user)})
   })
 }
 
@@ -58,7 +58,7 @@ function signIn (req, res) {
       if (!isMatch) {
         return res.status(500).send({message: `Email or password does not match`})
       }
-      return res.status(200).send({token: service.createToken(user)})
+      return res.send({token: service.createToken(user)})
     })
   })
 }

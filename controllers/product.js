@@ -11,7 +11,7 @@ function getProduct (req, res) {
       return res.status(404).send({message: `Product ${productId} not found`})
     }
 
-    res.status(200).send({product})
+    res.send({product})
   })
 }
 
@@ -22,7 +22,7 @@ function getProducts (req, res) {
     } else if (!products) {
       return res.status(404).send({message: `Products not found`})
     }
-    res.status(200).send({products})
+    res.send({products})
   })
 }
 function updateProduct (req, res) {
@@ -33,7 +33,7 @@ function updateProduct (req, res) {
     if (err) {
       return res.status(500).send({message: `Error trying to update object in  database: ${err}`})
     }
-    res.status(200).send({product: productUpdate})
+    res.send({product: productUpdate})
   })
 }
 
@@ -52,7 +52,7 @@ function createProduct (req, res) {
     if (err) {
       res.status(500).send({message: `Error trying to salve object into database: ${err}`})
     }
-    res.status(200).send({product: productStored})
+    res.send({product: productStored})
   })
 }
 
@@ -67,7 +67,7 @@ function deleteProduct (req, res) {
       if (err) {
         return res.status(500).send({message: `Error trying to delete object in  database: ${err}`})
       }
-      res.status(200).send({message: `Object deleted`})
+      res.send({message: `Object deleted`})
     })
   })
 }
