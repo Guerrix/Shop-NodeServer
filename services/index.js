@@ -14,7 +14,7 @@ const config = require('../config')
 //   return jwt.encode(payload, config.SECRET_TOKEN)
 // }
 
-module.exports = {createToken : function (user) {
+module.exports = {createToken: function (user) {
   const payload = {
     sub: user._id,
     iat: moment().unix(),

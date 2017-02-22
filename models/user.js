@@ -7,6 +7,7 @@ const crypto = require('crypto')
 
 const UserSchema = Schema({
   email: {type: String, unique: true, lowercase: true},
+  facebookId: String,
   displayName: String,
   avatar: String,
   password: {type: String},
@@ -19,13 +20,17 @@ UserSchema.pre('save', function (next) {
   if (!user.isModified('password')) {
     return next()
   }
-  bcrypt.hash(user.password, null, null, function (err, hash) {
-    if (err) {
+  if (this.password) {
+    bcrypt.hash(user.password, null, null, function (err, hash) {
+      if (err) {
+        next()
+      }
+      user.password = hash
       next()
-    }
-    user.password = hash
+    })
+  } else {
     next()
-  })
+  }
 })
 
 UserSchema.methods.comparePassword = function (candidatePassword, cb) {
